@@ -5,7 +5,7 @@
   width: 32px;
   height: 32px;
   cursor: pointer;
-  background-image: url(../../../images/close-button.svg)
+  background-image: url(../../../images/close-button.svg);
 }
 
 .popup__close-button:hover {
