@@ -8,8 +8,8 @@
   display: none;
   justify-content: center;
   align-items: center;
+  font-family: 'Inter', Arial, sans-serif;
 }
-
 
 @media screen and (max-width: 500px) {
   .popup {
@@ -17,4 +17,3 @@
     padding-right: 19px;
   }
 }
-

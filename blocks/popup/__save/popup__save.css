@@ -4,7 +4,6 @@
   width: 100%;
   background-color: black;
   color: white;
-  font-family: Inter;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -13,9 +12,10 @@
   padding: 14px 124px 18px 125px;
   box-sizing: border-box;
   max-height: 50px;
-  border-radius: 5px;
+  border-radius: 2px;
   border: none;
   cursor: pointer;
+  transition: opacity .3s linear;
 }
 
 .popup__save:hover {
