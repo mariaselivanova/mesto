@@ -7,4 +7,5 @@
   margin: 58px auto 0 auto;
   grid-row-gap: 20px;
   grid-column-gap: 17px;
+  justify-items: center;
 }
