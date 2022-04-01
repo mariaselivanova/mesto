@@ -47,12 +47,17 @@ const elements = document.querySelector('.elements');
 const template = document.querySelector('.template').content;
 const buttonClosePic = document.querySelector('.popup__close-button_type_pic');
 
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('mousedown', setOverlayListener);
+  document.addEventListener('keydown', setEscListener);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('mousedown', setOverlayListener);
+  document.removeEventListener('keydown', setEscListener);
 }
 
 function handleProfileFormSubmit(event) {
@@ -124,6 +129,21 @@ function openPopupPic (e) {
   openPopup(popupPic);
 };
 
+
+function setEscListener (e) {
+  if(e.code === 'Escape') {
+  const openedPopup = document.querySelector('.popup_opened');
+  closePopup(openedPopup);
+}
+}
+
+function setOverlayListener (e) {
+  const openedPopup = document.querySelector('.popup_opened');
+      if(e.target === openedPopup) {
+          closePopup(openedPopup);
+      }
+  }
+
 buttonEdit.addEventListener('click', openPopupProfile);
 buttonCloseEdit.addEventListener('click', () => closePopup(popupEdit));
 formElementEdit.addEventListener('submit', handleProfileFormSubmit);
@@ -131,4 +151,3 @@ buttonAdd.addEventListener('click', openPopupCard);
 buttonCloseAdd.addEventListener('click', () => closePopup(popupAdd));
 formElementAdd.addEventListener('submit', handleAddFormSubmit);
 buttonClosePic.addEventListener('click', () => closePopup(popupPic));
-
