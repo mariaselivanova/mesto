@@ -61,14 +61,7 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('mousedown', setOverlayListener);
-  document.removeEventListener('keydown', setEscListener); ''
-}
-
-function closePopupAdd() {
-  closePopup(popupAdd)
-  buttonSave.classList.add('popup__save_inactive');
-  buttonSave.setAttribute('disabled', true);
-  formAdd.reset();
+  document.removeEventListener('keydown', setEscListener);
 }
 
 function handleProfileFormSubmit(event) {
@@ -117,7 +110,10 @@ function openPopupProfile() {
 
 function openPopupCard() {
   openPopup(popupAdd);
+  buttonSave.classList.add('popup__save_inactive');
+  buttonSave.setAttribute('disabled', true);
   formAdd.reset();
+
 }
 
 function handleAddFormSubmit(event) {
@@ -138,7 +134,6 @@ function openPopupPic(e) {
   openPopup(popupPic);
 };
 
-
 function setEscListener(e) {
   if (e.code === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
@@ -157,6 +152,6 @@ buttonEdit.addEventListener('click', openPopupProfile);
 buttonCloseEdit.addEventListener('click', () => closePopup(popupEdit));
 formElementEdit.addEventListener('submit', handleProfileFormSubmit);
 buttonAdd.addEventListener('click', openPopupCard);
-buttonCloseAdd.addEventListener('click', () => closePopupAdd());
+buttonCloseAdd.addEventListener('click', () => closePopup(popupAdd));
 formElementAdd.addEventListener('submit', handleAddFormSubmit);
 buttonClosePic.addEventListener('click', () => closePopup(popupPic));
