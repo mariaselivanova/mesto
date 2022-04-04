@@ -113,7 +113,6 @@ function openPopupCard() {
   buttonSave.classList.add('popup__save_inactive');
   buttonSave.setAttribute('disabled', true);
   formAdd.reset();
-
 }
 
 function handleAddFormSubmit(event) {
