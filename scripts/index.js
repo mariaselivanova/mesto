@@ -91,11 +91,11 @@ function createCard(item) {
   buttonDelete.addEventListener('click', handleDeleteButton);
   image.addEventListener('click', openPopupPic);
   return card;
-};
+}
 
 const addCard = (card) => {
   elements.prepend(card);
-};
+}
 
 initialElements.forEach((item) => {
   const initialCard = createCard(item);
@@ -123,15 +123,15 @@ function handleAddFormSubmit(event) {
   }
   const newCard = createCard(item);
   addCard(newCard);
-  closePopupAdd();
+  closePopup(popupAdd);
 }
 
 function openPopupPic(e) {
   captionPic.textContent = e.target.alt;
-  popupImage.src = e.target.src
+  popupImage.src = e.target.src;
   popupImage.alt = e.target.alt;
   openPopup(popupPic);
-};
+}
 
 function setEscListener(e) {
   if (e.code === 'Escape') {
