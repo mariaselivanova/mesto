@@ -1,10 +1,9 @@
-import { initialElements, openPopup, closePopup, popupPic, buttonClosePic, popupImage, captionPic } from './index.js'
-
 export class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._description = data.description;
     this._image = data.image;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -35,13 +34,8 @@ export class Card {
     });
 
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._handleOpenPopupPic()
+      this._handleCardClick(this._description, this._image)
     });
-
-    buttonClosePic.addEventListener('click', () => {
-      closePopup(popupPic)
-    });
-
   }
 
   _handleLikeButton() {
@@ -52,17 +46,4 @@ export class Card {
     this._element.querySelector('.element__delete-button').closest('.element').remove();
   }
 
-  _handleOpenPopupPic() {
-    popupImage.src = this._image
-    captionPic.textContent = this._description
-    popupImage.alt = this._description
-    openPopup(popupPic);
-  }
-
 }
-
-initialElements.forEach((item) => {
-  const card = new Card(item, '.card-template_type_default');
-  const cardElement = card.generateCard();
-  document.querySelector('.elements').append(cardElement);
-});

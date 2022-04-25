@@ -4,6 +4,7 @@ export class FormValidator {
     this._validationConfig = validationConfig;
     this._form = form;
     this._submitButton = this._form.querySelector(this._validationConfig.submitButtonSelector);
+    this._inputList = Array.from(this._form.querySelectorAll(this._validationConfig.inputSelector));
   }
 
   _showInputError(input) {
@@ -28,15 +29,21 @@ export class FormValidator {
     }
   };
 
-  enableValidation() {
-    this._inputList = Array.from(this._form.querySelectorAll(this._validationConfig.inputSelector));
-    this._toggleButtonState();
+  _setEventListeners() {
     this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
         this._isValid(input);
         this._toggleButtonState();
       });
     });
+  };
+
+  enableValidation() {
+    this._form.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+    this._toggleButtonState();
+    this._setEventListeners();
   };
 
   _hasInvalidInput() {
@@ -59,7 +66,7 @@ export class FormValidator {
     this._form.reset();
     this._inputList.forEach((input) => {
       this._hideInputError(input);
-    }); 3
+    });
     this._toggleButtonState()
   }
 
