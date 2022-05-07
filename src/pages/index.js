@@ -22,14 +22,19 @@ const popupWithImage = new PopupWithImage('.popup_type_pic');
 const popupAdd = new PopupWithForm('.popup_type_add', handleFormAddSubmit);
 const popupProfile = new PopupWithForm('.popup_type_edit', handleFormProfileSubmit);
 
-//Отрисовка изначальных карточек.
-function cardRenderer(item) {
-  const card = new Card({
+//Создать одну карточку.
+function createCard(item) {
+  const newCard = new Card({
     data: item,
     handleCardClick
   }, '.card-template_type_default');
-  const cardElement = card.generateCard();
-  cardList.addItem(cardElement)
+  const cardElement = newCard.generateCard();
+  return cardElement
+}
+
+//Отрисовка изначальных карточек.
+function cardRenderer(item) {
+  cardList.addInitialItem(createCard(item))
 }
 
 const cardList = new Section({ items: initialElements, renderer: cardRenderer }, '.elements')
@@ -56,23 +61,13 @@ function openPopupAdd() {
   popupAdd.open()
 }
 
-//Создать одну карточку.
-function createCard(item) {
-  const newCard = new Card({
-    data: item,
-    handleCardClick
-  }, '.card-template_type_default');
-  const cardElement = newCard.generateCard();
-  return cardElement;
-}
-
 //Сабмит формы добавления карточки.
 function handleFormAddSubmit() {
   const data = {
     description: titleInput.value,
     image: linkInput.value
   }
-  elementsContainer.prepend(createCard(data));
+  cardList.addItem(createCard(data))
   popupAdd.close();
 }
 

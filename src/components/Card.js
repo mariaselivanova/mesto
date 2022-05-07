@@ -17,9 +17,10 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    const cardImage = this._element.querySelector('.element__image');
     this._setEventListeners();
-    this._element.querySelector('.element__image').src = this._image;
-    this._element.querySelector('.element__image').alt = this._description;
+    cardImage.src = this._image;
+    cardImage.alt = this._description;
     this._element.querySelector('.element__paragraph').textContent = this._description;
     return this._element;
   }
@@ -43,7 +44,7 @@ export default class Card {
   }
 
   _handleDeleteButton() {
-    this._element.querySelector('.element__delete-button').closest('.element').remove();
+    this._element.remove()
   }
 
 }
