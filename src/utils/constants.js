@@ -1,39 +1,16 @@
-export const initialElements = [
-  {
-    description: 'Архыз',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    description: 'Челябинская область',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    description: 'Иваново',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    description: 'Камчатка',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    description: 'Холмогорский район',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    description: 'Байкал',
-    image: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const buttonAdd = document.querySelector('.profile__add-button');
 const buttonEdit = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_profession');
-const titleInput = document.querySelector('.popup__input_type_title');
-const linkInput = document.querySelector('.popup__input_type_link');
 const formAdd = document.querySelector('.popup__form_add');
 const formEdit = document.querySelector('.popup__form_edit');
-const elementsContainer = document.querySelector('.elements');
+const formAvatar = document.querySelector('.popup__form_avatar');
+const deleteButton = document.querySelector('.popup__save_type_delete');
+const avatarPic = document.querySelector('.profile__avatar');
+const avatarWrap = document.querySelector('.profile__wrap');
+const buttonChangeAvatar = document.querySelector('.popup__save_type_avatar');
+const buttonAddPic = document.querySelector('.popup__save_type_add');
+const buttonEditProfile = document.querySelector('.popup__save_type_edit');
 
 const validationConfig = {
   formSelector: ".popup__form",
@@ -44,4 +21,19 @@ const validationConfig = {
   inactiveButtonClass: "popup__save_inactive"
 };
 
-export { buttonAdd, buttonEdit, nameInput, jobInput, titleInput, linkInput, formAdd, formEdit, elementsContainer, validationConfig }
+export {
+  buttonAdd,
+  buttonEdit,
+  nameInput,
+  jobInput,
+  formAdd,
+  formEdit,
+  validationConfig,
+  deleteButton,
+  avatarPic,
+  avatarWrap,
+  formAvatar,
+  buttonChangeAvatar,
+  buttonAddPic,
+  buttonEditProfile
+ }

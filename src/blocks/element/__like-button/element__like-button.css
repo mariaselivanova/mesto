@@ -3,8 +3,6 @@
   background: url(../../../images/like-button.svg);
   height: 19px;
   width: 22px;
-  margin-top: 5px;
-  margin-right: 5px;
   cursor: pointer;
   transition: opacity .3s linear;
 }

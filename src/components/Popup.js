@@ -15,15 +15,12 @@ export default class Popup {
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
-  //содержит логику закрытия попапа клавишей Esc.
   _handleEscClose(e) {
     if (e.code === 'Escape') {
       this.close();
     }
   }
 
-  //добавляет слушатель клика иконке закрытия попапа.
-  //Модальное окно также закрывается при клике на затемнённую область вокруг формы
   setEventListeners() {
     this._popupElement.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened')) {
