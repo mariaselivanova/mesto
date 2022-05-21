@@ -136,7 +136,7 @@ function openPopupAvatar() {
 }
 
 //Сабмит формы добавления аватара.
-function handleFormAvatarSubmit({ link: avatarData }) {
+function handleFormAvatarSubmit({ avatar: avatarData }) {
   buttonChangeAvatar.textContent = 'Сохранение...'
   api.changeUserAvatar({ avatar: avatarData })
     .then((item) => {
