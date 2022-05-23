@@ -15,7 +15,6 @@ import {
   formAdd,
   formEdit,
   validationConfig,
-  avatarPic,
   avatarWrap,
   formAvatar,
   deleteButton,
@@ -24,8 +23,6 @@ import {
   buttonEditProfile
 }
   from '../utils/constants.js';
-
-var cardList
 
 //Валидация.
 const editProfileValidator = new FormValidator(validationConfig, formEdit);
@@ -43,17 +40,17 @@ const api = new Api({
     authorization: '4c0b3356-a348-425c-8987-45b8f07b26a2'
   }
 });
-
 const user = new UserInfo({
   userNameSelector: '.profile__name',
   userInfoSelector: '.profile__profession',
   avatarSelector: '.profile__avatar'
-}, api, buttonEditProfile);
+}, buttonEditProfile);
 const popupWithImage = new PopupWithImage('.popup_type_pic');
 const popupAdd = new PopupWithForm('.popup_type_add', handleFormAddSubmit);
 const popupProfile = new PopupWithForm('.popup_type_edit', handleFormProfileSubmit);
 const popupDelete = new PopupWithSubmit({ selectorPopup: '.popup_type_delete' });
-const popupAvatar = new PopupWithForm('.popup_type_avatar', handleFormAvatarSubmit)
+const popupAvatar = new PopupWithForm('.popup_type_avatar', handleFormAvatarSubmit);
+const cardList = new Section(cardRenderer, '.elements');
 
 //Создать одну карточку.
 function createCard(item) {
@@ -74,10 +71,25 @@ function createCard(item) {
             deleteButton.textContent = "Да"
           })
       })
+    },
+    handleLikeClick: () => {
+      if (!newCard.isLiked()) {
+        api.addLike(newCard.getID())
+          .then((data) => {
+            newCard.toggleLikes(data);
+          })
+          .catch((err) => console.log(err))
+      } else {
+        api.deleteLike(newCard.getID())
+          .then((data) => {
+            newCard.toggleLikes(data);
+          })
+          .catch((err) => console.log(err))
+      }
     }
   }
 
-    , '.card-template_type_default', user.getUserId(), api);
+    , '.card-template_type_default', user.getUserId());
   const cardElement = newCard.generateCard();
   return cardElement
 }
@@ -99,7 +111,18 @@ function openPopupProfile() {
 //Сабмит формы профиля.
 function handleFormProfileSubmit({ userName: name, userInfo: info }) {
   buttonEditProfile.textContent = "Сохранение..."
-  user.setUserInfo({ name, info })
+  api.changeUserInfo({ name: name, about: info })
+    .then((item) => {
+      user.setUserInfo({
+        name: item.name,
+        info: item.about,
+        avatar: item.avatar
+      })
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      buttonEditProfile.textContent = 'Сохранить'
+    })
   popupProfile.close()
 }
 
@@ -140,7 +163,11 @@ function handleFormAvatarSubmit({ avatar: avatarData }) {
   buttonChangeAvatar.textContent = 'Сохранение...'
   api.changeUserAvatar({ avatar: avatarData })
     .then((item) => {
-      avatarPic.src = item.avatar;
+      user.setUserInfo({
+        name: item.name,
+        info: item.about,
+        avatar: item.avatar
+      })
       popupAvatar.close();
     })
     .catch((err) => alert(err))
@@ -149,27 +176,32 @@ function handleFormAvatarSubmit({ avatar: avatarData }) {
     })
 }
 
-//Добавить изначальные карточки.
-api.getAllCards()
+//Рендер карточек.
+function cardRenderer(item) {
+  cardList.addInitialItem(createCard(item))
+}
+
+//Получить изначальные карточки.
+const initialCards = api.getAllCards()
   .then((data) => {
-    cardList = new Section({
-      items: data.map((item) => ({
-        description: item.name,
-        image: item.link,
-        likeCounter: item.likes.length,
-        id: item._id,
-        ownerID: item.owner._id,
-        likes: item.likes
-      })), renderer: cardRenderer
-    }, '.elements')
-    function cardRenderer(item) {
-      cardList.addInitialItem(createCard(item))
-    }
-    cardList.renderItems();
-    return cardList
+    const cards = data.map((item) => ({
+      description: item.name,
+      image: item.link,
+      likeCounter: item.likes.length,
+      id: item._id,
+      ownerID: item.owner._id,
+      likes: item.likes
+    }))
+    return cards
   })
   .catch((err) => alert(err))
 
+//Получить информацию о пользователе.
+const userData = api.handleUserInfo()
+  .then((userData) => {
+    return userData
+  })
+  .catch((err) => alert(err))
 
 //Слушатели.
 buttonEdit.addEventListener('click', openPopupProfile);
@@ -181,6 +213,20 @@ popupDelete.setEventListeners();
 popupAvatar.setEventListeners();
 avatarWrap.addEventListener('click', openPopupAvatar);
 
-//Получить информацию о пользователе.
-user.saveUserInfo();
-
+//в Promise.all передаем массив промисов, которые нужно выполнить.
+Promise.all([
+  initialCards,
+  userData
+])
+  .then(([cards, userData]) => {
+    cardList.renderItems(cards);
+    user.setUserId(userData._id);
+    user.setUserInfo({
+      name: userData.name,
+      info: userData.about,
+      avatar: userData.avatar
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+  })

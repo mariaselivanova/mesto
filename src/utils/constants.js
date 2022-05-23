@@ -6,7 +6,6 @@ const formAdd = document.querySelector('.popup__form_add');
 const formEdit = document.querySelector('.popup__form_edit');
 const formAvatar = document.querySelector('.popup__form_avatar');
 const deleteButton = document.querySelector('.popup__save_type_delete');
-const avatarPic = document.querySelector('.profile__avatar');
 const avatarWrap = document.querySelector('.profile__wrap');
 const buttonChangeAvatar = document.querySelector('.popup__save_type_avatar');
 const buttonAddPic = document.querySelector('.popup__save_type_add');
@@ -30,7 +29,6 @@ export {
   formEdit,
   validationConfig,
   deleteButton,
-  avatarPic,
   avatarWrap,
   formAvatar,
   buttonChangeAvatar,
